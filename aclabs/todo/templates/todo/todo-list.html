@@ -1,0 +1,10 @@
+<h3>Your todos are:</h3>
+<ul>
+{% for todo in todos %}
+    {% if not todo.completed %}
+    <li>{{ todo.text }} - NOT FINISHED</li>
+    {% else %}
+    <li>{{ todo.text }}</li>
+    {% endif %}
+{% endfor %}
+</ul>
