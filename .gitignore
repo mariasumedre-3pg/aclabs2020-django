@@ -1,2 +1,19 @@
 *.sqlite3
-*.pyc
+*.egg-info
+*.py[cod]
+
+# dependencies
+/client/node_modules
+
+# testing
+/client/coverage
+
+# production
+/client/build
+
+# generated staticfiles
+/aclabs/staticfiles
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

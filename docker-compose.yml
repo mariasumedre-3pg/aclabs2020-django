@@ -1,0 +1,19 @@
+version: '2.1'
+services:
+    backend:
+        build:
+            context: ./aclabs
+            dockerfile: Dockerfile
+        volumes: 
+            -  "./aclabs:/app"
+        ports:
+            - "8000:8000"
+
+    frontend:
+        build:
+            context: ./client
+            dockerfile: Dockerfile
+        volumes:
+            - "./client:/usr/src/client"
+        ports:
+            - "3000:3000"
