@@ -13,8 +13,8 @@ class Query(graphene.ObjectType):
     all_todos = graphene.List(TodoType)
     todo = graphene.Field(
         TodoType,
-        id=graphene.Int(),
-        name=graphene.String()
+        id=graphene.String(),
+        text=graphene.String()
     )
 
     def resolve_all_todos(self, info, **kwargs):
@@ -53,7 +53,7 @@ class AddTodoMutation(graphene.Mutation):
 
 class TodoMutation(graphene.Mutation):
     class Arguments:
-        id = graphene.Int(required=True)
+        id = graphene.String(required=True)
         text = graphene.String()
         priority = graphene.String()
         dueDate = graphene.String()
@@ -73,9 +73,27 @@ class TodoMutation(graphene.Mutation):
         return TodoMutation(todo=todo)
 
 
+class DeleteTodoMutation(graphene.Mutation):
+    class Arguments:
+        id = graphene.String(required=True)
+
+    ok = graphene.Boolean()
+
+    def mutate(self, info, **kwargs):
+        deleted = False
+        _id = kwargs.get("id")
+        if _id:
+            todo = Todo.objects.get(id=_id)
+            count, _ = todo.delete()
+            if count == 1:
+                deleted = True
+        return DeleteTodoMutation(ok=deleted)
+
+
 class Mutation(graphene.ObjectType):
     edit_todo = TodoMutation.Field()
     add_todo = AddTodoMutation.Field()
+    delete_todo = DeleteTodoMutation.Field()
 
 
 schema = graphene.Schema(query=Query, mutation=Mutation)

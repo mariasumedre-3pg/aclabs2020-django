@@ -9,6 +9,7 @@ from graphene_django.views import GraphQLView
 from todo import views
 
 urlpatterns = [
+    path('', views.index, name="index"),
     path('todos', views.todo_list, name="todo-list"),
     path('graphqlapi/', csrf_exempt(GraphQLView.as_view(graphiql=True))),
     path('graphql/', csrf_exempt(GraphQLView.as_view(graphiql=False))),

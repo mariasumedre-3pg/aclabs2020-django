@@ -1,7 +1,10 @@
+import uuid
 from django.db import models
 
 # Create your models here.
 class Todo(models.Model):
+    id = models.UUIDField(
+        primary_key=True, default=uuid.uuid4)
     completed = models.BooleanField(default=False)
     text = models.TextField()
     priority = models.CharField(
